@@ -1,9 +1,7 @@
 local M = {}
 
 local ts = vim.treesitter
-local get_node_text = vim.treesitter.get_node_text or vim.treesitter.query.get_node_text
-local ts_utils = require("nvim-treesitter.ts_utils")
-local parsers = require("nvim-treesitter.parsers")
+local get_node_text = ts.get_node_text or ts.query.get_node_text
 
 local make_default_opts = function()
   return {
@@ -182,8 +180,11 @@ local is_container = function(filetype, node)
 end
 
 local get_container_at_cursor = function(filetype)
-  parsers.get_parser(0):parse()
-  local node = ts_utils.get_node_at_cursor()
+  ts.get_parser():parse()
+  local node = vim.treesitter.get_node()
+  if node == nil then
+    return
+  end
   while not is_container(filetype, node) do
     node = node:parent()
     if node == nil then

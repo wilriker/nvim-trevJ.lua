@@ -1,7 +1,6 @@
 local M = {}
 
 local ts = vim.treesitter
-local get_node_text = ts.get_node_text or ts.query.get_node_text
 
 local make_default_opts = function()
   return {
@@ -254,7 +253,7 @@ M.format_at_cursor = function()
       table.insert(children, { node = child, name = name })
     end
     for i, child in ipairs(children) do
-      local lines = vim.split(get_node_text(child.node, 0), "\n")
+      local lines = vim.split(ts.get_node_text(child.node, 0), "\n")
       if
         opts.final_separator
         and i > 1

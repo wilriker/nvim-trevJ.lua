@@ -181,7 +181,7 @@ end
 
 local get_container_at_cursor = function(filetype)
   ts.get_parser():parse()
-  local node = vim.treesitter.get_node()
+  local node = ts.get_node()
   if node == nil then
     return
   end
